@@ -11,4 +11,3 @@
 2.05249
 2.04819
 2.09353
-Resistance, computed with Least Squares Method: R0 = 2.08

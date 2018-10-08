@@ -10,8 +10,7 @@ const	int	MaxDataSize=1000;//max. number of measurements
 //=========================================================
 int ReadData(double U[],double I[]);
 int ComputeResistance(double U[],double I[],double R[],int nline);
-int ComputeLSM( double U[],double I[],int nline,double* r_LSM);//it uses Least Squares Method to compute the resistance
-int WriteResults(double R[],double r_LSM,int nline);
+int WriteResults(double R[],int nline);
 
 //=========================================================
 int main()
@@ -31,9 +30,7 @@ int nline=0;//number of measurements
 
 ComputeResistance(U,I,R,nline);
 
-ComputeLSM(U,I,nline,&r_LSM);//Least Squares Method
-
-if (WriteResults(R,r_LSM,nline)==WRITEERROR) return WRITEERROR;
+if (WriteResults(R,nline)==WRITEERROR) return WRITEERROR;
 
 printf("Hope you'll have 'perfect'(10) for this laboratory work\n");
 return 0;
@@ -69,12 +66,8 @@ int ComputeResistance(double U[],double I[],double R[],int nline)
 	}
 }
 
-int ComputeLSM(double U[],double I[],int nline,double* r_LSM)
-{
-	*r_LSM=U[1]/I[1];
-}
 
-int WriteResults(double R[],double r_LSM,int nline)
+int WriteResults(double R[],int nline)
 {
 	FILE*file=fopen("Results.txt","w");
 	if (!file)
@@ -90,6 +83,4 @@ int WriteResults(double R[],double r_LSM,int nline)
 		fprintf(file, "%lg\n",R[line]);
 	}
 
-	fprintf(file, "Resistance, computed with Least Squares Method: R0 = %lg\n",r_LSM);
-	fclose(file);
 }
